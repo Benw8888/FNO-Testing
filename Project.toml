@@ -1,4 +1,4 @@
-name = "NeuralOperators"
+name = "FNO-Testing"
 uuid = "ea5c82af-86e5-48da-8ee1-382d6ad7af4b"
 authors = ["JingYu Ning <foldfelis@gmail.com> and contributors"]
 version = "0.3.2"
