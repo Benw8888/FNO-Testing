@@ -33,7 +33,7 @@ function get_data(; n=2048, Δsamples=2^3, grid_size=div(2^13, Δsamples), T=Flo
 end
 
 function get_dataloader(;Δsamples=2^3, ratio::Float64=0.9, batchsize=100)
-    𝐱, 𝐲 = get_data(n=2048, Δsamples)
+    𝐱, 𝐲 = get_data(n=2048, Δsamples=Δsamples)
     data_train, data_test = splitobs((𝐱, 𝐲), at=ratio)
 
     loader_train = DataLoader(data_train, batchsize=batchsize, shuffle=true)

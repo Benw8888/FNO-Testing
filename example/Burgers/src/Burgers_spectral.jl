@@ -3,12 +3,12 @@ using DiffEqDevTools
 using LinearAlgebra
 using Plots; gr()
 
-function spectral_output(input_data, viscosity)
+function spectral_output(;n, input_data, viscosity)
     # Uses spectral method to get an output for a Burgers PDE input
     # Viscosity is a constant in the Burgers equation. Should be 0.1
+    # n is the resolution (# of data points) of the input
 
     S = Fourier()
-    n = 512
     x = points(S, n)
     D2 = Derivative(S,2)[1:n,1:n]
     D  = (Derivative(S) → S)[1:n,1:n]
@@ -38,7 +38,7 @@ end
 
 
 
-tslices=[0.0 1.0 2.0 3.0 5.0]
-ys=hcat((Ti*sol(t) for t in tslices)...)
-labels=["t=$t" for t in tslices]
-plot(x,ys,label=labels)
+#tslices=[0.0 1.0 2.0 3.0 5.0]
+#ys=hcat((Ti*sol(t) for t in tslices)...)
+#labels=["t=$t" for t in tslices]
+#plot(x,ys,label=labels)
