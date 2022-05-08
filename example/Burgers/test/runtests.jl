@@ -12,7 +12,7 @@ using BSON: @save
     #loss = learner.cbstate.metricsepoch[ValidationPhase()][:Loss].values[end]
     #@test loss < 0.1
 
-    @save "Burgers-learner.bson" learner
+    #@save "Burgers-learner.bson" learner
 
     # include("deeponet.jl")
 end
