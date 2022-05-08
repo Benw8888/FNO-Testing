@@ -5,7 +5,7 @@ using Plots; gr()
 
 function spectral_output(input_data, viscosity)
     # Uses spectral method to get an output for a Burgers PDE input
-    # Viscosity is a constant in the Burgers equation
+    # Viscosity is a constant in the Burgers equation. Should be 0.1
 
     S = Fourier()
     n = 512

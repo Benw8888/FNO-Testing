@@ -32,8 +32,8 @@ function get_data(; n=2048, Δsamples=2^3, grid_size=div(2^13, Δsamples), T=Flo
     return x_loc_data, reshape(y_data, 1, :, n)
 end
 
-function get_dataloader(; ratio::Float64=0.9, batchsize=100)
-    𝐱, 𝐲 = get_data(n=2048)
+function get_dataloader(;Δsamples=2^3, ratio::Float64=0.9, batchsize=100)
+    𝐱, 𝐲 = get_data(n=2048, Δsamples)
     data_train, data_test = splitobs((𝐱, 𝐲), at=ratio)
 
     loader_train = DataLoader(data_train, batchsize=batchsize, shuffle=true)
@@ -44,7 +44,7 @@ end
 
 __init__() = register_burgers()
 
-function train(; cuda=true, η₀=1f-3, λ=1f-4, epochs=500)
+function train(; input_data=NaN, cuda=true, η₀=1f-3, λ=1f-4, epochs=500)
     if cuda && CUDA.has_cuda()
         device = gpu
         CUDA.allowscalar(false)
@@ -55,7 +55,12 @@ function train(; cuda=true, η₀=1f-3, λ=1f-4, epochs=500)
     end
 
     model = FourierNeuralOperator(ch=(2, 64, 64, 64, 64, 64, 128, 1), modes=(16, ), σ=gelu)
-    data = get_dataloader()
+
+    data = input_data
+    if (input_data == NaN)
+        data = get_dataloader()
+    end
+
     optimiser = Flux.Optimiser(WeightDecay(λ), Flux.ADAM(η₀))
     loss_func = l₂loss
 
